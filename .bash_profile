@@ -37,9 +37,9 @@ function myfunct() {
       echo -e "Public facing IP Address ..... $(curl -s ip.appspot.com) " ; 
       echo -e "en0 address ..... $(ipconfig getifaddr en0)";
       echo
-      echo -e "git repo base dir ... $(git rev-parse --show-toplevel)";
-      echo -e "git remote origin url ..... $(git config --get remote.origin.url)";
-      echo -e "git branch ..... $(git branch)";
+      echo -e "git repo base dir ... $(git rev-parse --show-toplevel 2> /dev/null)";
+      echo -e "git remote origin url ..... $(git config --get remote.origin.url 2> /dev/null)";
+      echo -e "git branch ..... $(git branch 2> /dev/null)";
       echo
       echo -e "Frontmost Finder window path ..... $(echo $currFolderPath)"
       echo 
