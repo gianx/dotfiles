@@ -2,6 +2,11 @@
 
 [[ -s ~/.bashrc ]] && source ~/.bashrc
 
+# For bash completition: http://davidalger.com/development/bash-completion-on-os-x-with-brew/
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi
+
 ###################################################################################
 # FUNCTIONS
 ###################################################################################
@@ -43,6 +48,18 @@ function myfunct() {
       echo
       echo -e "Frontmost Finder window path ..... $(echo $currFolderPath)"
       echo 
+      echo -e "Useful commands:
+      - mcd: makes a dir and jumps inside;
+      - trash: move a file to MacOS trash;
+      - ql: open with Quicklook;
+      - ff: find in current directory;
+      - ffe: find in current directory files starting with a string;
+      - ffe: find in current directory files ending with a string;
+      - fcd: open frontmost window of MacOS Finder;
+      - f: opens current directory in MacOS Finder;
+      - cleanupDS: cleans .DS_Store;
+      - cleanupLS: fix \"Open with\" menu;";
+      echo
   }
 }
 
