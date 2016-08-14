@@ -2,46 +2,54 @@
 
 [[ -s ~/.bashrc ]] && source ~/.bashrc
 
+###################################################################################
+# FUNCTIONS
+###################################################################################
 
-# Makes a dir and jumps inside
-mcd () { mkdir -p "$1" && cd "$1"; } 
+function myfunct() {
+  # Makes a dir and jumps inside
+  mcd () { mkdir -p "$1" && cd "$1"; } 
 
-# Move a file to MacOS trash     
-trash () { command mv "$@" ~/.Trash ; } 
+  # Move a file to MacOS trash     
+  trash () { command mv "$@" ~/.Trash ; } 
 
-# Open a file in MacOS Quicklook preview  
-ql () { qlmanage -p "$*" >& /dev/null; }  
+  # Open a file in MacOS Quicklook preview  
+  ql () { qlmanage -p "$*" >& /dev/null; }  
 
-# Find... 
-ff () { /usr/bin/find . -name "$@" ; }      # ... under current directory ...
-ffs () { /usr/bin/find . -name "$@"'*' ; }  # ... files starting with ...
-ffe () { /usr/bin/find . -name '*'"$@" ; }  # ... files ending with ...
+  # Find... 
+  ff () { /usr/bin/find . -name "$@" ; }      # ... under current directory ...
+  ffs () { /usr/bin/find . -name "$@"'*' ; }  # ... files starting with ...
+  ffe () { /usr/bin/find . -name '*'"$@" ; }  # ... files ending with ...
 
-# Open frontmost window of MacOS Finder
-fcd () {
-        echo "cd to \"$currFolderPath\""
-        cd "$currFolderPath"
+  # Open frontmost window of MacOS Finder
+  fcd () {
+          echo "cd to \"$currFolderPath\""
+          cd "$currFolderPath"
+  }
+  # Get infos
+  infos() {
+
+      echo
+      echo -e "Hostname ..... $(hostname) " ;
+      echo -e "Current user ..... $(whoami) " ; 
+      echo -e "Current date ..... $(date)";
+      echo  
+      echo -e "Public facing IP Address ..... $(curl -s ip.appspot.com) " ; 
+      echo -e "en0 address ..... $(ipconfig getifaddr en0)";
+      echo
+      echo -e "git repo base dir ... $(git rev-parse --show-toplevel)";
+      echo -e "git remote origin url ..... $(git config --get remote.origin.url)";
+      echo -e "git branch ..... $(git branch)";
+      echo
+      echo -e "Frontmost Finder window path ..... $(echo $currFolderPath)"
+      echo 
+  }
 }
-# Get infos
-infos() {
 
-    echo
-    echo -e "Hostname ..... $(hostname) " ;
-    echo -e "Current user ..... $(whoami) " ; 
-    echo -e "Current date ..... $(date)";
-    echo  
-    echo -e "Public facing IP Address ..... $(curl -s ip.appspot.com) " ; 
-    echo -e "en0 address ..... $(ipconfig getifaddr en0)";
-    echo
-    echo -e "git repo base dir ... $(git rev-parse --show-toplevel)";
-    echo -e "git remote origin url ..... $(git config --get remote.origin.url)";
-    echo -e "git branch ..... $(git branch)";
-    echo
-    echo -e "Frontmost Finder window path ..... $(echo $currFolderPath)"
-    echo 
-}
-
+###################################################################################
 # VARIABLES
+###################################################################################
+
 function myvar {
   # Color terminal
   export CLICOLOR=1
@@ -60,11 +68,16 @@ function myvar {
                 end try
                 POSIX path of currFolder
             end tell
-EOT
-  )
+EOT)
+  # Cleanup .DS_STORE files
+  alias cleanupDS="find . -type f -name '*.DS_Store' -ls -delete"
+  alias cleanupLS="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 }
 
+###################################################################################
 # ALIASES
+###################################################################################
+
 function myalias {
   alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
   alias ls='ls -GFh'
@@ -79,7 +92,10 @@ function myalias {
   alias fixtty='stty sane' # Fix terminal settings when screwed up
 }
 
+###################################################################################
 # PROMPT
+###################################################################################
+
 function myprompt {
   local BLACK="\[\033[0;30m\]"
   local BLACKBOLD="\[\033[1;30m\]"
@@ -105,6 +121,11 @@ function myprompt {
 
 }
 
+###################################################################################
+# MAIN
+###################################################################################
+
+myfunct
 myvar
 myalias
 myprompt
