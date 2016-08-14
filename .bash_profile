@@ -2,15 +2,85 @@
 
 [[ -s ~/.bashrc ]] && source ~/.bashrc
 
-export CLICOLOR=1
-export LSCOLORS=GxFxCxDxBxegedabagaced
 
-alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
-alias ls='ls -GFh'
-alias ll='ls -l'
-alias ddu='sh ~/Dropbox/Development/Themes\ WordPress/dobsondev-underscores/ddunderscores-osx.sh'
+# Makes a dir and jumps inside
+mcd () { mkdir -p "$1" && cd "$1"; } 
 
-function prompt {
+# Move a file to MacOS trash     
+trash () { command mv "$@" ~/.Trash ; } 
+
+# Open a file in MacOS Quicklook preview  
+ql () { qlmanage -p "$*" >& /dev/null; }  
+
+# Find... 
+ff () { /usr/bin/find . -name "$@" ; }      # ... under current directory ...
+ffs () { /usr/bin/find . -name "$@"'*' ; }  # ... files starting with ...
+ffe () { /usr/bin/find . -name '*'"$@" ; }  # ... files ending with ...
+
+# Open frontmost window of MacOS Finder
+fcd () {
+        echo "cd to \"$currFolderPath\""
+        cd "$currFolderPath"
+}
+# Get infos
+infos() {
+
+    echo
+    echo -e "Hostname ..... $(hostname) " ;
+    echo -e "Current user ..... $(whoami) " ; 
+    echo -e "Current date ..... $(date)";
+    echo  
+    echo -e "Public facing IP Address ..... $(curl -s ip.appspot.com) " ; 
+    echo -e "en0 address ..... $(ipconfig getifaddr en0)";
+    echo
+    echo -e "git repo base dir ... $(git rev-parse --show-toplevel)";
+    echo -e "git remote origin url ..... $(git config --get remote.origin.url)";
+    echo -e "git branch ..... $(git branch)";
+    echo
+    echo -e "Frontmost Finder window path ..... $(echo $currFolderPath)"
+    echo 
+}
+
+# VARIABLES
+function myvar {
+  # Color terminal
+  export CLICOLOR=1
+  export LSCOLORS=GxFxCxDxBxegedabagaced
+  # Default editor
+  export EDITOR=//Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl
+  # Set default blocksize for ls, df, du
+  export BLOCKSIZE=1k 
+  # Current Finder path
+  export currFolderPath=$( /usr/bin/osascript <<EOT
+            tell application "Finder"
+                try
+            set currFolder to (folder of the front window as alias)
+                on error
+            set currFolder to (path to desktop folder as alias)
+                end try
+                POSIX path of currFolder
+            end tell
+EOT
+  )
+}
+
+# ALIASES
+function myalias {
+  alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+  alias ls='ls -GFh'
+  alias ll='ls -l'
+
+  alias cd..='cd ../'
+  alias ..='cd ../'
+  alias ...='cd ../../'
+
+  alias f='open -a Finder ./'
+
+  alias fixtty='stty sane' # Fix terminal settings when screwed up
+}
+
+# PROMPT
+function myprompt {
   local BLACK="\[\033[0;30m\]"
   local BLACKBOLD="\[\033[1;30m\]"
   local RED="\[\033[0;31m\]"
@@ -29,13 +99,14 @@ function prompt {
   local WHITEBOLD="\[\033[1;37m\]"
   local RESETCOLOR="\[\e[00m\]"
 
-  export PS1="\n$RED\u $PURPLE@ $GREEN\w $RESETCOLOR$GREENBOLD\$(git branch 2> /dev/null)\n $BLUE[\#] → $RESETCOLOR"
+  # export PS1="$BLUE[\#] $RED\u$PURPLE$RESETCOLOR@\H$GREEN:\w $RESETCOLOR$GREENBOLD\$(git config --get remote.origin.url 2> /dev/null)\$(git branch 2> /dev/null) $BLUE →  $RESETCOLOR"
+  export PS1="$BLUE[\#] $RED\u$PURPLE$RESETCOLOR@\H$GREEN:\w #  $RESETCOLOR"
   export PS2=" | → $RESETCOLOR"
+
 }
 
-prompt
+myvar
+myalias
+myprompt
 
-# Setting PATH for Python 3.4
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
-export PATH
+
