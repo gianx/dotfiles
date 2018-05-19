@@ -2,18 +2,19 @@
 
 ### 1 - Install homebrew
 
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 ### 2 - Download .bash_profile
 
-brew install wget
+   brew install wget
 
-cd
+   cd
 
-wget https://raw.githubusercontent.com/gianx/dotfiles/master/.bash_profile
-source .bash_profile
+   wget https://raw.githubusercontent.com/gianx/dotfiles/master/.bash_profile
+ 
+   source .bash_profile
 
-brew cask install 1password alfred keyboard-maestro bartender franz google-chrome iterm2 onyx pibakery skype the-unarchiver vlc
+   brew cask install 1password alfred keyboard-maestro bartender franz google-chrome iterm2 onyx pibakery skype the-unarchiver vlc
 
 ### 3 - Manually install
 
