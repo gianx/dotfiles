@@ -7,7 +7,9 @@
 ### 2 - Download .bash_profile
 
 brew install wget
+
 cd
+
 wget https://raw.githubusercontent.com/gianx/dotfiles/master/.bash_profile
 source .bash_profile
 
