@@ -1,3 +1,15 @@
+# Configure an EC2 instance
+
+Download:
+
+- .zshrc
+
+- .vimrc
+
+- .tmux.conf
+
+
+
 # Configure a Mac
 
 ### 1 - Install homebrew
