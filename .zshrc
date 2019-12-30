@@ -144,9 +144,11 @@ function precmd() {
     elapsed=$((($now-$timer)/1000))
     # Calculate hour
     nowdate=$(date +"%H:%M:%S")
+    # GIT: Changes not staged for commit
+    GIT_not_staged=$(git status -s -uno | wc -l)
     # Generate right prompt
     #export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$PUBLIC_IP"
-    export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$nowdate"
+    export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$nowdate $GIT_not_staged"
     unset timer
   fi
 }
