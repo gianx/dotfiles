@@ -139,10 +139,14 @@ function preexec() {
 
 function precmd() {
   if [ $timer ]; then
-    now=$(($(date +%s%0N)/1000000))
     # Calculate command duration
+    now=$(($(date +%s%0N)/1000000))
     elapsed=$((($now-$timer)/1000))
-    export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$PUBLIC_IP"
+    # Calculate hour
+    nowdate=$(date +"%H:%M:%S")
+    # Generate right prompt
+    #export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$PUBLIC_IP"
+    export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$nowdate"
     unset timer
   fi
 }
@@ -198,3 +202,4 @@ if command -v pyenv 1>/dev/null 2>&1; then
  eval "$(pyenv init -)"
 fi
 eval "$(pyenv virtualenv-init -)"
+# Configure a Mac
