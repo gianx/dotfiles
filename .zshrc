@@ -139,12 +139,16 @@ function preexec() {
 
 function precmd() {
   if [ $timer ]; then
+    # Get local ip
+    localip
     # Calculate command duration
     now=$(($(date +%s%0N)/1000000))
     elapsed=$((($now-$timer)/1000))
     # Calculate hour
     nowdate=$(date +"%H:%M:%S")
     # GIT: Changes not staged for commit
+    GIT_branch=$(git rev-parse --abbrev-ref HEAD)
+    GIT_remote_origin=$(git config --get remote.origin.url)
     GIT_not_staged=$(git status -s -uno | wc -l)
     GIT_staged=$(git diff --cached --numstat | wc -l)
     # Generate right prompt
@@ -172,7 +176,7 @@ publicip () {
 
 localip () {
     export LOCALIP=$(ifconfig eth0| grep "inet[ ]" | awk '{print $2}')
-    echo $LOCALIP
+    #echo $LOCALIP
 }
 
 # Infos
