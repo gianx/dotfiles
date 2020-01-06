@@ -44,8 +44,6 @@ autoload -Uz compinit && compinit
 
 autoload -Uz vcs_info
 
-
-
 ###########################################################################
 #
 # ALIAS
@@ -148,8 +146,8 @@ function precmd() {
     GIT_not_staged=$(git status -s -uno | wc -l)
     GIT_staged=$(git diff --cached --numstat | wc -l)
     # Generate right prompt
-    #export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$PUBLIC_IP"
-    export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$nowdate $GIT_not_staged $GIT_staged"
+    export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$LOCALIP"
+    #export RPROMPT="%(?,%F{green}OK,%F{red}ERROR:%?) %F{blue}[${elapsed}s] %F{yellow}$nowdate $GIT_not_staged $GIT_staged"
     unset timer
   fi
 }
@@ -192,6 +190,14 @@ infos (){
   echo -e "Frontmost Finder window path ..... $(echo $currFolderPath)"
 }
 
+case "$OSTYPE" in
+    darwin*)
+        # Insert here Mac specific functions
+    ;;
+    linux*)
+        # Insert here linux specific functions
+    ;;
+esac
 
 ###########################################################################
 #
