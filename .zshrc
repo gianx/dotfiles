@@ -1,4 +1,3 @@
-
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(git colorize)
@@ -78,6 +77,9 @@ alias tls="tmux ls"
 alias tnew="tmux new -s"
 alias trename="tmux rename-session -t"
 alias tattach="tmux attach -t"
+
+alias gp="git diff --stat --cached origin/master"
+
 
 alias history='fc -t "%Y-%m-%d %T:" -il '
 

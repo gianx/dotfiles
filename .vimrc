@@ -15,8 +15,6 @@ set foldlevelstart=10
 set foldnestmax=10
 set expandtab
 set mouse=a
-set wrap
-set textwidth=79
 set laststatus=2
 set backspace=indent,eol,start
 set errorbells
